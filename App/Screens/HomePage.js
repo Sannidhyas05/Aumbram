@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, TextInput, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+  ImageBackground,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Modal,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 // Get the screen width and height
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 function HomePage({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItem, setSelectedItem] = useState(null); // Track the selected item
-  const [isModalVisible, setModalVisible] = useState(false); // Modal visibility
-  const [likedItems, setLikedItems] = useState({}); // Store liked items as an object
-  const [isButtonClicked, setIsButtonClicked] = useState(false); // To track if 'Buy Now' is clicked
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [likedItems, setLikedItems] = useState({});
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   // Sample data
   const fashionItems = [
@@ -18,59 +33,49 @@ function HomePage({ navigation }) {
     { id: 2, image: require('../assets/Fasion products/brooke-cagle-dGK3ynaDNCI-unsplash.jpg'), price: '₹1750' },
     { id: 3, image: require('../assets/Fasion products/darko-mitev-c5t_j1zlk1Y-unsplash.jpg'), price: '₹7150' },
     { id: 4, image: require('../assets/Fasion products/dom-hill-nimElTcTNyY-unsplash.jpg'), price: '₹1450' },
-    { id: 5, image: require('../assets/Fasion products/gabriel-benois-sVIBH6dMIlI-unsplash.jpg'), price: '₹5450' },
-    { id: 6, image: require('../assets/Fasion products/good-faces-IL1oeY0pN2k-unsplash.jpg'), price: '₹5750' },
-    { id: 7, image: require('../assets/Fasion products/kal-visuals-d5GlpSOAzzg-unsplash.jpg'), price: '₹4750' },
-    { id: 8, image: require('../assets/Fasion products/tamara-bellis-IwVRO3TLjLc-unsplash.jpg'), price: '₹3750' },
-    { id: 9, image: require('../assets/Fasion products/tamara-bellis-U2ymajzuqFk-unsplash.jpg'), price: '₹2750' },
-    { id: 10, image: require('../assets/Fasion products/zahir-namane-TjUJJACTav4-unsplash.jpg'), price: '₹6750' },
   ];
 
   const categories = [
-    { name: 'Fashion', image: require('../assets/pretty-woman-with-yellow-dress.jpg') },
-    { name: 'Beauty', image: require('../assets/portrait-beautiful-smiling-cute-model-with-pink-lips-girl-summer-colorful-dress-model-posing-showing-peace-sign-giving-kiss.jpg') },
-    { name: 'Health & Fitness', image: require('../assets/ryan-hoffman-AwV3LiHm-XM-unsplash.jpg') },
+    { name: 'Fashion', image: require('../assets/portrait-beautiful-smiling-cute-model-with-pink-lips-girl-summer-colorful-dress-model-posing-showing-peace-sign-giving-kiss.jpg') },
+    { name: 'Beauty', image: require('../assets/pretty-woman-with-yellow-dress.jpg') },
+    { name: 'Health & Fitness', image: require('../assets/female-shop-friend-women-market.jpg') },
   ];
 
-  // Open modal with the selected item
   const openModal = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
-    setIsButtonClicked(false); // Reset the Buy Now button state when opening the modal
+    setIsButtonClicked(false);
   };
 
-  // Close the modal
   const closeModal = () => {
     setSelectedItem(null);
     setModalVisible(false);
   };
 
-  // Enhanced toggleLike function
   const toggleLike = (id, item) => {
     setLikedItems((prevLikes) => {
       const newLikes = { ...prevLikes };
       if (newLikes[id]) {
-        delete newLikes[id]; // Remove item from liked items if already liked
+        delete newLikes[id];
       } else {
-        newLikes[id] = item; // Add item to liked items if not already liked
+        newLikes[id] = item;
       }
       return newLikes;
     });
   };
 
-  // Handle Buy Now button click
   const handleBuyNowClick = () => {
     setIsButtonClicked(true);
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-          {/* Header Section */}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {/* Header */}
           <View style={styles.header}>
             <Text style={styles.logoText}>Aumbram</Text>
-            <View style={styles.rightIcons}>
+            <View style={styles.headerIcons}>
               <TouchableOpacity>
                 <Image source={require('../assets/bell.png')} style={styles.icon} />
               </TouchableOpacity>
@@ -87,13 +92,13 @@ function HomePage({ navigation }) {
           <View style={styles.searchBar}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search for Text"
+              placeholder="Search for products"
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
           </View>
 
-          {/* Categories Section */}
+          {/* Categories */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categories}>
             {categories.map((category, index) => (
               <TouchableOpacity key={index} style={styles.categoryButton}>
@@ -106,19 +111,8 @@ function HomePage({ navigation }) {
             ))}
           </ScrollView>
 
-          {/* Banner */}
-          <View style={styles.banner}>
-            <Image
-              style={styles.bannerImage}
-              source={require('../assets/female-shop-friend-women-market.jpg')}
-            />
-            <View style={styles.bannerOverlay}>
-              <Text style={styles.bannerText}>FLAT ₹300 OFF</Text>
-            </View>
-          </View>
-
           {/* Fashion Section */}
-          <Text style={styles.heading}>Fashion</Text>
+          <Text style={styles.sectionHeading}>Fashion</Text>
           <View style={styles.gridContainer}>
             {fashionItems.map((item) => (
               <View key={item.id} style={styles.gridItem}>
@@ -161,8 +155,8 @@ function HomePage({ navigation }) {
             {selectedItem && (
               <>
                 <Image source={selectedItem.image} style={styles.fullImage} />
-                <Text style={styles.footerPrice}>{selectedItem.price}</Text>
-                <View style={styles.footer}>
+                <Text style={styles.priceText}>{selectedItem.price}</Text>
+                <View style={styles.modalFooter}>
                   <TouchableOpacity style={styles.cartButton}>
                     <Text style={styles.cartButtonText}>Add to Cart</Text>
                   </TouchableOpacity>
@@ -183,207 +177,37 @@ function HomePage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    alignItems: 'center',
-  },
-  logoText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  rightIcons: {
-    flexDirection: 'row',
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    marginHorizontal: 10,
-  },
-  searchBar: {
-    marginTop: 10,
-    marginHorizontal: 10,
-    borderRadius: 5,
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    height: 40,
-    justifyContent: 'center',
-  },
-  searchInput: {
-    fontSize: 14,
-    color: '#000',
-  },
-  categories: {
-    marginTop: 20,
-  },
-  categoryButton: {
-    marginRight: 10,
-  },
-  categoryImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
-    justifyContent: 'flex-end',
-  },
-  categoryOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  categoryText: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  banner: {
-    marginTop: 20,
-    position: 'relative',
-  },
-  bannerImage: {
-    width: '100%',
-    height: 250,
-  },
-  bannerOverlay: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    backgroundColor: 'rgba(197, 19, 19, 0.5)',
-    paddingHorizontal: 20,
-    paddingVertical: 100,
-    borderRadius: 5,
-  },
-  bannerText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 20,
-    marginLeft: 10,
-  },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  gridItem: {
-    width: (screenWidth - 30) / 2,
-    marginBottom: 20,
-    position: 'relative',
-  },
-  productImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-  },
-  likeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
-  },
-  likeIcon: {
-    width: 40,
-    height: 37,
-  },
-  buyNowButton: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.54)',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  clickedBuyNowButton: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    backgroundColor: '#ff6347',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  buyNowText: {
-    color: '#fff',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(235, 147, 16, 0.7)',
-  },
-  modalOverlay: {
-    flex: 1,
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    width: screenWidth - 40,
-    alignItems: 'center',
-  },
-  fullImage: {
-    width: '100%',
-    height: 300,
-    marginBottom: 20,
-    borderRadius: 10,
-  },
-  footerPrice: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 20,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  cartButton: {
-    backgroundColor: '#f2a850',
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-  },
-  cartButtonText: {
-    color: '#fff',
-  },
-  buyButton: {
-    backgroundColor: '#f2a850',
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-  },
-  buyButtonText: {
-    color: '#fff',
-  },
-  closeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#ccc',
-  },
-  closeButtonText: {
-    color: '#000',
-  },
+  container: { flex: 1, backgroundColor: '#f8f8f8' },
+  header: { flexDirection: 'row', justifyContent: 'space-between', padding: 10 },
+  logoText: { fontSize: 24, fontWeight: 'bold', color: '#000' },
+  headerIcons: { flexDirection: 'row' },
+  icon: { width: 30, height: 30, marginHorizontal: 10 },
+  searchBar: { margin: 10, backgroundColor: '#fff', borderRadius: 5, paddingHorizontal: 10 },
+  searchInput: { height: 40, fontSize: 14 },
+  categories: { marginVertical: 20 },
+  categoryButton: { marginRight: 10 },
+  categoryImage: { width: 150, height: 150, justifyContent: 'center' },
+  categoryOverlay: { backgroundColor: 'rgba(0,0,0,0.5)', padding: 10 },
+  categoryText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  sectionHeading: { fontSize: 18, fontWeight: 'bold', margin: 10 },
+  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  gridItem: { width: (screenWidth - 30) / 2, marginBottom: 20 },
+  productImage: { width: '100%', height: 200, borderRadius: 10 },
+  likeButton: { position: 'absolute', top: 10, right: 10 },
+  likeIcon: { width: 30, height: 30 },
+  buyNowButton: { position: 'absolute', bottom: 10, left: 10, backgroundColor: '#000', padding: 10, borderRadius: 5 },
+  clickedBuyNowButton: { backgroundColor: '#ff6347' },
+  buyNowText: { color: '#fff' },
+  modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.7)' },
+  modalOverlay: { flex: 1 },
+  modalContent: { backgroundColor: '#fff', padding: 20, borderRadius: 10, width: screenWidth - 40 },
+  fullImage: { width: '100%', height: 300, borderRadius: 10 },
+  priceText: { fontSize: 24, fontWeight: 'bold', marginVertical: 10 },
+  modalFooter: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 },
+  cartButton: { backgroundColor: '#f2a850', padding: 10, borderRadius: 5 },
+  buyButton: { backgroundColor: '#f2a850', padding: 10, borderRadius: 5 },
+  closeButton: { backgroundColor: '#ccc', padding: 10, borderRadius: 5 },
+  closeButtonText: { color: '#000' },
 });
 
 export default HomePage;
