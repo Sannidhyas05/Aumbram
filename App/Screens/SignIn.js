@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+ import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 
 function SignIn({ navigation }) {
@@ -9,17 +9,18 @@ function SignIn({ navigation }) {
     if (phoneNumber.length === 10) {
       navigation.navigate('VerifyOTP', { phoneNumber });
     } else {
-      alert('Please enter a valid 10-digit phone number');
+      Alert.alert('Invalid Input', 'Please enter a valid 10-digit phone number.');
     }
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/logo.png")}
+        source={require('../assets/logo.png')}
         style={styles.backgroundImage}
+        resizeMode="contain"
       >
-        <View style={styles.overlay}>
+        <View style={styles.contentContainer}>
           <Text style={styles.title}>Sign In</Text>
           <TextInput
             style={styles.input}
@@ -28,6 +29,7 @@ function SignIn({ navigation }) {
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             maxLength={10}
+            placeholderTextColor="#666"
           />
           <TouchableOpacity style={styles.button} onPress={handleGetOtpPress}>
             <Text style={styles.buttonText}>Get OTP</Text>
@@ -42,53 +44,59 @@ function SignIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   backgroundImage: {
-    height: 350,
-    width: 350,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
-  overlay: {
-    backgroundColor: 'rgba(242, 169, 80, 0.33)',
-    padding: 20,
-    borderRadius: 100,
-    alignItems: 'center',
+  contentContainer: {
     width: '80%',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
+    fontSize: 28,
     fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
   },
   input: {
-    height: 40,
-    borderColor: 'rgb(0,0,0)',
-    borderWidth: 1,
     width: '100%',
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
     marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#333',
+    backgroundColor: '#f9f9f9',
   },
   button: {
     backgroundColor: '#f2a850',
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 8,
     width: '100%',
-    borderRadius: 10,
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
 });
 
-export default SignIn;   
-
+export default SignIn;

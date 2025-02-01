@@ -23,6 +23,11 @@
     },
     "web": {
       "favicon": "./App/assets/favicon.png"
-    }
+    },
+"devDependencies": {
+  "@react-native-community/cli": "latest"
+}
+
+
   }
 }
