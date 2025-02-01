@@ -42,7 +42,6 @@ const BottomTabs = () => (
       tabBarStyle: { backgroundColor: "#fff", height: 60 },
       tabBarIcon: ({ color, size }) => {
         let iconSource;
-
         if (route.name === "Home") {
           iconSource = require("./App/assets/logo.png");
         } else if (route.name === "Cart") {
