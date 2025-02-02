@@ -28,6 +28,7 @@ import PrivacyPolicy from "./App/Screens/PrivacyPolicy";
 import TermsPage from "./App/Screens/TermsPage";
 import LogoutPage from "./App/Screens/LogoutPage";
 import BrandsPage from "./App/Screens/BrandsPage";
+import BrandsProductPage from "./App/Screens/BrandsProductPage";
 
 // Create Navigators
 const Stack = createStackNavigator();
@@ -113,6 +114,7 @@ const MainStack = ({ navigation }) => (
     <Stack.Screen name="Feedback" component={FeedbackPage} />
     <Stack.Screen name="Privacy Policy" component={PrivacyPolicy} />
     <Stack.Screen name="Terms" component={TermsPage} />
+    <Stack.Screen name="Brand Products" component={BrandsProductPage} />
   </Stack.Navigator>
 );
 
