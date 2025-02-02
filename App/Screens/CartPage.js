@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 const CartPage = () => {
   const route = useRoute();
-  const [cartItems, setCartItems] = useState([]); // Initialize cartItems as an empty array
+
+  // Provide default values to prevent undefined errors
+  const { cartItems: initialCartItems = [], setCartItems = () => {} } =
+    route.params || {};
+
+  const [cartItems, updateCart] = useState(initialCartItems);
+
+  useEffect(() => {
+    updateCart(initialCartItems);
+  }, [initialCartItems]);
 
   return (
     <View style={styles.container}>
@@ -48,7 +57,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   scrollContainer: {
-    paddingBottom: 20, // Add some padding at the bottom for better visibility
+    paddingBottom: 20,
   },
   cartItem: {
     flexDirection: "row",
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#fff",
     borderRadius: 10,
-    elevation: 5, // Slight shadow for better elevation effect
+    elevation: 5,
     alignItems: "center",
   },
   productImage: {

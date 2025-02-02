@@ -153,6 +153,11 @@ export default function App() {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
         <Stack.Screen name="HomePage" component={HomeDrawer} />
+        <Stack.Screen name="CheckoutPage" component={CheckoutPage} />
+        <Stack.Screen
+          name="OrderConfirmationPage"
+          component={OrderConfirmationPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

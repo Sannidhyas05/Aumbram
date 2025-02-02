@@ -12,14 +12,31 @@ import {
 const { width: screenWidth } = Dimensions.get("window");
 
 function ProductListingPage({ route, navigation }) {
-  const { item, setCartItems, cartItems } = route.params; // Get cart state
+  // Ensure item, cartItems, and setCartItems exist, with safe defaults
+  const { item, cartItems = [], setCartItems = () => {} } = route.params || {};
+
+  if (!item) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: Product not found</Text>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
+          <Text style={styles.backText}>Go Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   const handleAddToCart = () => {
-    const updatedCart = [...cartItems, item]; // Add product to cart
-    setCartItems(updatedCart); // Update cart state
-
-    // Navigate to CartPage and pass the updated cart state
+    const updatedCart = [...cartItems, item];
+    setCartItems(updatedCart);
     navigation.navigate("Cart", { cartItems: updatedCart, setCartItems });
+  };
+
+  const handleBuyNow = () => {
+    navigation.navigate("Checkout", { item }); // Navigate to checkout
   };
 
   return (
@@ -41,7 +58,7 @@ function ProductListingPage({ route, navigation }) {
         <TouchableOpacity style={styles.cartButton} onPress={handleAddToCart}>
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity style={styles.buyButton} onPress={handleBuyNow}>
           <Text style={styles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
       </View>
@@ -58,6 +75,8 @@ function ProductListingPage({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 10 },
+  errorContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+  errorText: { fontSize: 18, color: "red" },
   imageContainer: {
     width: screenWidth,
     height: 300,
