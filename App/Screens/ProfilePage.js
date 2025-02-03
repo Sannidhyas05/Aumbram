@@ -1,10 +1,15 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfilePage = () => {
   const navigation = useNavigation();
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
@@ -19,11 +24,13 @@ const ProfilePage = () => {
       </View>
       <View style={styles.menuItem}>
         <Text style={styles.menuItemText}>Help Center</Text>
-        <Text style={styles.menuItemSubText}>Help regarding your recent purchases</Text>
+        <Text style={styles.menuItemSubText}>
+          Help regarding your recent purchases
+        </Text>
       </View>
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => navigation.navigate('Favourites', { likedItems: {} })}
+        onPress={() => navigation.navigate("Favourites", { likedItems: {} })}
       >
         <Text style={styles.menuItemText}>Wishlist</Text>
         <Text style={styles.menuItemSubText}>Your most loved styles</Text>
@@ -45,45 +52,45 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
   },
   profileHeader: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#ffffff',
-    borderBottomColor: '#e0e0e0',
+    backgroundColor: "#ffffff",
+    borderBottomColor: "#e0e0e0",
     borderBottomWidth: 1,
   },
   avatarPlaceholder: {
     width: 80,
     height: 80,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
     borderRadius: 40,
     marginBottom: 10,
   },
   loginButton: {
-    backgroundColor: '#ff5757',
+    backgroundColor: "#ff5757",
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 5,
   },
   loginButtonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
+    color: "#ffffff",
+    fontWeight: "bold",
   },
   menuItem: {
     padding: 20,
-    backgroundColor: '#ffffff',
-    borderBottomColor: '#e0e0e0',
+    backgroundColor: "#ffffff",
+    borderBottomColor: "#e0e0e0",
     borderBottomWidth: 1,
   },
   menuItemText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   menuItemSubText: {
     fontSize: 14,
-    color: '#757575',
+    color: "#757575",
     marginTop: 5,
   },
   footer: {
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
   },
   footerItem: {
     fontSize: 14,
-    color: '#757575',
+    color: "#757575",
     paddingVertical: 5,
   },
 });

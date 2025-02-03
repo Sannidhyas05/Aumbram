@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth } = Dimensions.get("window");
@@ -24,7 +25,7 @@ function HomePage() {
   const fashionItems = [
     {
       id: 1,
-      image: require("../assets/Fasion products/aiony-haust-K0DxxljcRv0-unsplash.jpg"),
+      image: require("../assets/pretty-woman-with-yellow-dress.jpg"),
       price: "₹1500",
       name: "Trendy Jacket",
       description: "A stylish jacket perfect for all seasons.",
@@ -104,12 +105,12 @@ function HomePage() {
     },
   ];
 
-  const vendors = [
-    { id: 1, name: "Vendor A", image: require("../assets/adidad.png") },
-    { id: 2, name: "Vendor B", image: require("../assets/nike.jpeg") },
-    // { id: 3, name: 'Vendor C', image: require('../assets/Vendors/vendor3.png') },
-    // Additional vendors
-  ];
+  // const vendors = [
+  //   {
+  //     id: 1,
+  //     image: require("../assets/brand banner.jpg"),
+  //   },
+  // ];
 
   const toggleLike = (id, item) => {
     setLikedItems((prevLikes) => {
@@ -181,23 +182,16 @@ function HomePage() {
           </ScrollView>
 
           {/* Vendors Banner */}
-          <Text style={styles.sectionHeading}>Top Vendors</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.vendorBanner}
+          <Text style={styles.sectionHeading}> Get your Brands Here</Text>
+          <TouchableOpacity
+            style={styles.fullBannerContainer}
+            onPress={() => navigation.navigate("BrandsPage")} // Ensure correct navigation
           >
-            {vendors.map((vendor) => (
-              <TouchableOpacity
-                key={vendor.id}
-                style={styles.vendorCard}
-                onPress={() => navigation.navigate("VendorPage", { vendor })}
-              >
-                <Image source={vendor.image} style={styles.vendorImage} />
-                <Text style={styles.vendorName}>{vendor.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+            <Image
+              source={require("../assets/brand banner.jpg")}
+              style={styles.fullBannerImage}
+            />
+          </TouchableOpacity>
 
           {/* Promotional Banners */}
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -378,6 +372,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     marginTop: 5,
+  },
+  fullBannerContainer: {
+    width: screenWidth,
+    height: 200,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    borderRadius: 10,
+    overflow: "hidden", // Ensures proper clipping
+  },
+
+  fullBannerImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover", // Fix: "absolute" is not a valid mode
+    borderRadius: 10,
+  },
+
+  VendorText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "rgba(255, 255, 255, 0.9)",
   },
 });
 

@@ -153,6 +153,8 @@ export default function App() {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
         <Stack.Screen name="HomePage" component={HomeDrawer} />
+        <Stack.Screen name="BrandsPage" component={BrandsPage} />
+        <Stack.Screen name="Brand Products" component={BrandsProductPage} />
         <Stack.Screen name="CheckoutPage" component={CheckoutPage} />
         <Stack.Screen
           name="OrderConfirmationPage"
